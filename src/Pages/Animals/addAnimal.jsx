@@ -19,7 +19,7 @@ function AddAnimal() {
         }
 
         if (name.current.value.length > 0) {
-            fetch('http://127.0.0.1:3001/create_animal', {
+            fetch('https://kind-gold-adder-wig.cyclic.app/create_animal', {
                 method: 'POST',
                 body: JSON.stringify(data)
             })

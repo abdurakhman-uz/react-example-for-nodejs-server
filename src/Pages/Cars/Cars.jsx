@@ -6,7 +6,7 @@ function Cars() {
     const [data, setData] = useState([])
 
     useEffect(() => {
-        fetch('http://127.0.0.1:3001/cars').then((res) => res.json()).then(data => {
+        fetch('https://kind-gold-adder-wig.cyclic.app/cars').then((res) => res.json()).then(data => {
             setData({data})
         }).catch(err => {
             setData({data: []})

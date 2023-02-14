@@ -19,7 +19,7 @@ function AddFruit() {
         }
 
         if (name.current.value.length > 0 && color.current.value.length > 0) {
-            fetch('http://127.0.0.1:3001/create_fruit', {
+            fetch('https://kind-gold-adder-wig.cyclic.app/create_fruit', {
                 method: 'POST',
                 body: JSON.stringify(data)
             })

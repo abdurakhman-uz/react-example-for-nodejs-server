@@ -21,7 +21,7 @@ function AddCar() {
         }
 
         if (name.current.value.length > 0 && model.current.value.length > 0) {
-            fetch('http://127.0.0.1:3001/create_car', {
+            fetch('https://kind-gold-adder-wig.cyclic.app/create_car', {
                 method: 'POST',
                 body: JSON.stringify(data)
             })

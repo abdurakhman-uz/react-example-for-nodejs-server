@@ -4,10 +4,9 @@ import '../../Global.css';
 function Fruits() {
 
     const [data, setData] = useState([])
-    const name = useRef(null);
 
     useEffect(() => {
-        fetch('http://127.0.0.1:3001/fruits').then((res) => res.json()).then(data => {
+        fetch('https://kind-gold-adder-wig.cyclic.app/fruits').then((res) => res.json()).then(data => {
             setData({data})
         }).catch(err => {
             setData({data: []})
