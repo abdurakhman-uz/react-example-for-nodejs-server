@@ -1,4 +1,5 @@
 import {useEffect, useState} from "react"
+import { Analytics } from '@vercel/analytics/react';
 import '../../Global.css';
 
 function Cars() {
@@ -34,6 +35,7 @@ function Cars() {
                 ))) : <div>Failed to load data</div>
             } </div>
 
+            <Analytics />
         </>
 
 
