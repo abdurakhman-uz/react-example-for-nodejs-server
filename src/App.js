@@ -1,25 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import {Route, Routes} from "react-router-dom";
+import Navbar from "./Components/Navbar/Navbar";
+import Cars from "./Pages/Cars/Cars";
+import AddCar from "./Pages/Cars/addCar";
+import Fruits from "./Pages/Fruits/Fruits";
+import AddFruit from "./Pages/Fruits/addFruit";
+import Animals from "./Pages/Animals/Animals";
+import AddAnimal from "./Pages/Animals/addAnimal";
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    return (
+
+        <>
+
+            <Navbar/>
+
+            <Routes>
+
+              <Route path='/' element={<Cars/>}></Route>
+              <Route path='/cars' element={<Cars/>}></Route>
+              <Route path='/fruits' element={<Fruits/>}></Route>
+              <Route path='/animals' element={<Animals/>}></Route>
+              <Route path='/addcar' element={<AddCar/>}></Route>
+              <Route path='/addfruit' element={<AddFruit/>}></Route>
+              <Route path='/addanimal' element={<AddAnimal/>}></Route>
+
+            </Routes>
+        </>
+
+    );
 }
 
 export default App;
