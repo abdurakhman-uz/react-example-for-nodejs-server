@@ -16,7 +16,7 @@ const { confirm } = Modal;
 
 function Products() {
   const [data, setData] = useState([]);
-  const [deleted, setDeleted] = useState(true);
+  const [deleted, setDeleted] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
   const [show, setShow] = useState(false);
   const token = localStorage.getItem("token");
@@ -50,19 +50,22 @@ function Products() {
   }, [deleted]);
 
   const Finish = (values) => {
-    fetch(`http://localhost:3001/products/${show[1]}`, {
+    fetch(`http://localhost:3001/product/${show[1]}`, {
       method: "PUT",
       body: JSON.stringify(values),
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.token) {
-          localStorage.setItem("token", data.token);
-        }
+        // if (data.token) {
+        //   localStorage.setItem("token", data.token);
+        // }
+        success(data.msg)
+        setDeleted(true)
         console.log(data);
       })
       .catch((err) => {
         console.log(err);
+        error(err.msg)
       });
 
     // console.log(values, show[1]);
@@ -83,7 +86,7 @@ function Products() {
       okType: "danger",
       cancelText: "No",
       onOk() {
-        fetch(`http://localhost:3001/products/${id}`, { 
+        fetch(`http://localhost:3001/product/${id}`, { 
           method: "DELETE",
           body: JSON.stringify({ProductId: id})
          }
@@ -189,7 +192,6 @@ function Products() {
             name="name"
             rules={[
               {
-                required: true,
                 message: "Input required",
               },
             ]}
@@ -202,7 +204,6 @@ function Products() {
             name="description"
             rules={[
               {
-                required: true,
                 message: "Input required",
               },
             ]}
@@ -215,7 +216,6 @@ function Products() {
             name="price"
             rules={[
               {
-                required: true,
                 message: "Input required",
               },
             ]}

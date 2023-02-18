@@ -2,9 +2,9 @@
 
 # dependencies
 /node_modules
+/backups
 /.pnp
 .pnp.js
-backup.jsx
 
 # testing
 /coverage

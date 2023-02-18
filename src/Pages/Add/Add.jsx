@@ -7,12 +7,12 @@ function Add() {
   return (
     <>
       <div className="nestedLinks">
-        <Link className="nestedLink" to="/add/addUser">
-          Add User
-        </Link>
-        <span>|</span>
         <Link className="nestedLink" to="/add/addProduct">
           Add Product
+        </Link>
+        <span>|</span>
+        <Link className="nestedLink" to="/add/addUser">
+          Add User
         </Link>
       </div>
       <Outlet/>

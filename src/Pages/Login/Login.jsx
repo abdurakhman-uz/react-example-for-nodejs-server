@@ -69,7 +69,7 @@ const Login = () => (
         span: 16,
       }}
     >
-      <Button type="primary" htmlType="submit">
+      <Button className='modalButton' type="primary" htmlType="submit">
         Submit
       </Button>
     </Form.Item>
