@@ -1,42 +1,51 @@
-.Global {
-    width: 1000px;
-    text-align: center;
-    display: flex;
-    flex-wrap: wrap;
-    /* flex-direction: column; */
+body {
+    position: relative;
+    max-width: 1400px;
     margin-left: auto;
     margin-right: auto;
+}
+
+body::-webkit-scrollbar {
+    width: 1px;
+}
+
+body::-webkit-scrollbar-track {
+    background-color: darkgrey;
+}
+
+.products {
+    display: flex;
+    text-align: center;
+    flex-wrap: wrap;
+    margin-left: auto;
+    margin-right: auto;
+    /* flex-direction: column; */
+    width: 1000px;
+    margin-top: 40px;
+    margin-bottom: 100px;
 }
   
 .cards {
-    width: 200px;
-    margin-top: 30px;
-    background: rgb(125, 125, 125);
-    margin-right: auto;
-    margin-left: auto;
-    padding-left: 10px;
-    border-radius: 10px;
-}
-
-.form {
+    position: relative;
     display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
-    width: 300px;
-    height: 300px;
-    margin-top: 30px;
-    margin-left: auto;
+    width: 1000px;
+    margin-top: 10px;
     margin-right: auto;
+    margin-left: auto;
+    border-radius: 10px;
+    background: rgb(205, 205, 205);
 }
 
-.formInput {
-    box-sizing: border-box;
-    width: 300px;
-    height: 40px;
-    border-radius: 10px;
-    border: 2px solid #000;
-    padding: 5px;
+.cardsWrapper {
+    position: relative;
+    display: flex;
+}
+
+.card {
+    display: flex;
+    justify-content: space-around;
+    width: 600px;
+    height: 55px;
 }
 
 .submit-btn {
@@ -46,4 +55,79 @@
     border: none;
     background: rgb(125, 125, 125);
 }
+
+.config {
+    position: absolute;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 200px;
+    height: 55px;
+    right: 0;
+}
+
+.edit, .delete {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.edit::before {
+    content: url('./img/edit.svg');
+}
   
+.delete::before {
+    content: url('./img/delete.svg');
+}
+
+.loginForm {
+    position: absolute;
+    width: 400px;
+    height: 300px;
+    left: 530px;
+    top: 250px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.addUser > form, .addProduct > form {
+    position: absolute;
+    left: 400px;
+    height: 300px;
+    width: 500px;
+    margin-left: 0px;
+}
+
+.modalForm {
+    padding: 0;
+}
+
+.modalForms {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    margin-right: 100px;
+    
+}
+
+.modalButton {
+    margin-left: 80px;
+}
+
+.Btn {
+    margin-left: 120px;
+}
+
+.nestedLinks {
+    position: absolute;
+    display: flex;
+    justify-content: space-evenly;
+    width: 300px;
+    top: 200px;
+    left: 580px;
+}
+
+.nestedLink {
+    text-decoration: none;
+    color: #000;
+}

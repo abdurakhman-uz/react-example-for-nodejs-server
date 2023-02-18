@@ -15,3 +15,10 @@
 .link:hover {
     color: black;
 }
+
+.navLine {
+    position: absolute;
+    top: 40px;
+    width: 1400px;
+    border-bottom: 2px solid rgb(147, 147, 147);
+}
