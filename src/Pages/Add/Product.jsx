@@ -1,6 +1,5 @@
-import { Button, Input, Form, message, Upload } from "antd";
+import { Button, Input, Form, message } from "antd";
 import {motion} from 'framer-motion'
-import { UploadOutlined } from "@ant-design/icons";
 import "../../global.css";
 import { useState } from "react";
 
