@@ -6,7 +6,6 @@ import Products from "./Pages/Products/Product";
 import Add from "./Pages/Add/Add";
 import AddProduct from "./Pages/Add/Product"
 import AddUser from "./Pages/Add/User";
-
 const token = localStorage.getItem("token")
 
 function App() {
@@ -21,7 +20,7 @@ function App() {
             .then(res => res.json())
             .then(data => {
                 if(!data.msg){
-                    localStorage.removeItem("token");
+                    localStorage.removeItem("token")
                     console.log("error");
                 }
                 console.log(data);

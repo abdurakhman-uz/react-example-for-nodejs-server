@@ -1,4 +1,5 @@
 import { Button, Input, Form, message, Select } from "antd";
+import {motion} from "framer-motion"
 import "../../global.css"
 
 const { Option } = Select;
@@ -38,11 +39,28 @@ function AddUser() {
     console.log("Failed:", errorInfo);
   };
 
+  const animation = {
+    hidden: {
+      x: 50,
+      opacity: 0
+    },
+    visible: {
+      x: 0,
+      y: 1,
+      opacity: 1
+    }
+  }
+
   return (
     <>
       {contextHolder}
 
-      <div className="addUser">
+      <motion.div 
+        className="addUser"
+        initial="hidden"
+        whileInView="visible"
+        variants={animation}
+      >
         <Form
           className="loginForm"
           name="basic"
@@ -120,7 +138,7 @@ function AddUser() {
             </Button>
           </Form.Item>
         </Form>
-      </div>
+      </motion.div>
     </>
   );
 }

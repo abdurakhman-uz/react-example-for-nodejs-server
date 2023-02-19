@@ -1,26 +1,23 @@
 import { useEffect, useState } from "react";
-import { message, Form, Input, Button } from "antd";
+import { message, Form, Input, Button, Card } from "antd";
 import { motion } from "framer-motion";
 import "../../global.css";
 
+import { EditOutlined, DeleteOutlined, ShareAltOutlined } from '@ant-design/icons';
 import { ExclamationCircleFilled } from "@ant-design/icons";
 import { Modal } from "antd";
 import ModalForm from "../../Components/Modal/Modal";
-import {
-  fadeIn,
-  slideIn,
-  staggerContainer,
-  zoomIn,
-} from "../../Components/Motion/Motion";
+import { fadeIn, staggerContainer } from "../../Components/Motion/Motion";
 const { confirm } = Modal;
+const { Meta } = Card;
+
+const token = localStorage.getItem("token")
 
 function Products() {
   const [data, setData] = useState([]);
   const [deleted, setDeleted] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
   const [show, setShow] = useState(false);
-  const token = localStorage.getItem("token");
-  let id = null;
 
   const success = (message) => {
     messageApi.open({
@@ -56,9 +53,6 @@ function Products() {
     })
       .then((res) => res.json())
       .then((data) => {
-        // if (data.token) {
-        //   localStorage.setItem("token", data.token);
-        // }
         success(data.msg)
         setDeleted(true)
         console.log(data);
@@ -68,7 +62,7 @@ function Products() {
         error(err.msg)
       });
 
-    // console.log(values, show[1]);
+    console.log(values, show[1]);
   };
 
   const FinishFailed = (errorInfo) => {
@@ -77,7 +71,7 @@ function Products() {
 
   const showDeleteConfirm = (e) => {
     const dataId = e.target.dataset.id;
-    id = dataId;
+    console.log(e.target.dataset.id);
 
     confirm({
       title: "Are you sure delete this product?",
@@ -86,9 +80,8 @@ function Products() {
       okType: "danger",
       cancelText: "No",
       onOk() {
-        fetch(`http://localhost:3001/product/${id}`, { 
-          method: "DELETE",
-          body: JSON.stringify({ProductId: id})
+        fetch(`http://localhost:3001/product/${dataId}`, { 
+          method: "DELETE"
          }
         )
           .then((res) => res.json())
@@ -99,7 +92,7 @@ function Products() {
           })
           .catch((err) => {
             console.log(err);
-            error(data.msg);
+            error(err.msg);
           });
 
         console.log(`Deleted: ${dataId}`);
@@ -110,6 +103,35 @@ function Products() {
     });
   };
 
+  const BasicCard = (item) => (
+    <Card
+      style={{
+        width: 300,
+      }}
+      cover={
+        <img
+          alt="product-image"
+          src={item.img}
+        />
+      }
+      actions={[
+        token ? (
+          <EditOutlined key="edit" onClick={() => setShow([true, item.id])}/>
+        ) : '',
+        <ShareAltOutlined key="share" />,
+        token ? (
+          <DeleteOutlined key="delete" data-id={item.id} onClick={(e) => showDeleteConfirm(e)}/>
+        ) : ''
+      ]}
+    >
+      <Meta
+        title={item.name}
+        description={item.desc}
+        price={item.price}
+      />
+    </Card>
+  );
+
   return (
     <>
       {contextHolder}
@@ -117,7 +139,6 @@ function Products() {
       <div className="products">
         {data ? (
           data.map((item) => (
-            // <div className="cardsWrapper">
               <motion.div
                 animate={{
                   x: 0,
@@ -133,30 +154,10 @@ function Products() {
                 className="cardsWrapper"
               >
                 <motion.div
-                  // variants={zoomIn(0.2, 0.7)}
                   variants={fadeIn("up", "tween", 0.2, 0.4)}
-                  className="cards"
+                  className={`cards`}
                 >
-                  <div className="card">
-                    <p className="card-name">Name: {item.name}</p>
-                    <p className="card-desc">Description: {item.desc}</p>
-                    <p className="card-price">Price: {item.price}</p>
-                  </div>
-
-                  {token ? (
-                    <div className="config">
-                      <button
-                        className="edit"
-                        data-id={item.id}
-                        onClick={() => setShow([true, item.id])}
-                      ></button>
-                      <button
-                        className="delete"
-                        onClick={(e) => showDeleteConfirm(e)}
-                        data-id={item.id}
-                      ></button>
-                    </div>
-                  ) : null}
+                  { BasicCard(item) }
                 </motion.div>
               </motion.div>
             // </div>
@@ -200,8 +201,8 @@ function Products() {
           </Form.Item>
 
           <Form.Item
-            label="Desc"
-            name="description"
+            label="Description"
+            name="desc"
             rules={[
               {
                 message: "Input required",

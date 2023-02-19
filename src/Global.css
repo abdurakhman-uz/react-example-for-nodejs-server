@@ -1,20 +1,10 @@
-body {
-    position: relative;
-    max-width: 1400px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-body::-webkit-scrollbar {
-    width: 1px;
-}
-
-body::-webkit-scrollbar-track {
-    background-color: darkgrey;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 .products {
     display: flex;
+    justify-content: space-evenly;
     text-align: center;
     flex-wrap: wrap;
     margin-left: auto;
@@ -26,26 +16,18 @@ body::-webkit-scrollbar-track {
 }
   
 .cards {
-    position: relative;
     display: flex;
-    width: 1000px;
     margin-top: 10px;
-    margin-right: auto;
-    margin-left: auto;
     border-radius: 10px;
-    background: rgb(205, 205, 205);
+}
+
+.cards.admin {
+    height: 300px;
 }
 
 .cardsWrapper {
     position: relative;
     display: flex;
-}
-
-.card {
-    display: flex;
-    justify-content: space-around;
-    width: 600px;
-    height: 55px;
 }
 
 .submit-btn {
@@ -64,6 +46,7 @@ body::-webkit-scrollbar-track {
     width: 200px;
     height: 55px;
     right: 0;
+    margin-top: 250px;
 }
 
 .edit, .delete {
@@ -112,6 +95,7 @@ body::-webkit-scrollbar-track {
 
 .modalButton {
     margin-left: 80px;
+    background-color: #1677ff;
 }
 
 .Btn {
@@ -130,4 +114,29 @@ body::-webkit-scrollbar-track {
 .nestedLink {
     text-decoration: none;
     color: #000;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.upload {
+    position: relative;
+    left: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.productAdd::before {
+    content: url("/src/img/shop.svg");
+    width: 20px;
+    height: 20px;
+    padding-right: 3px;
+}
+
+.userAdd::before {
+    content: url("/src/img/user-add.svg");
+    width: 20px;
+    height: 20px;
+    padding-right: 5px;
 }
