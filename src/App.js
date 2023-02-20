@@ -6,12 +6,13 @@ import Products from "./Pages/Products/Product";
 import Add from "./Pages/Add/Add";
 import AddProduct from "./Pages/Add/Product"
 import AddUser from "./Pages/Add/User";
-const token = localStorage.getItem("token")
+const tokens = localStorage.getItem("token")
 
 export const MyContext = createContext()
 
 function App() {
 
+    const [token, setToken] = useState(tokens ? tokens : null)
     const [edited, setEdited] = useState(false);
     const [show, setShow] = useState(false);
 
@@ -38,7 +39,9 @@ function App() {
     return (
 
         <>
-            <MyContext.Provider value={{ edited, setEdited, show, setShow }}>
+            <MyContext.Provider value={
+                {edited, setEdited, show, setShow, token, setToken}
+            }>
                 <Navbar/>
 
                 <Routes>

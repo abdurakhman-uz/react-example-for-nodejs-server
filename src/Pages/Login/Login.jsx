@@ -1,8 +1,13 @@
 import { Button, Form, Input } from "antd";
 import {motion} from "framer-motion"
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../Context/authContext";
 import "../../global.css";
 
 const Login = () => {
+  const navigate = useNavigate()
+  const {token, setToken} = useContext(AuthContext)
   const Finish = (values) => {
     fetch("http://localhost:3001/auth/login", {
       method: "POST",
@@ -11,7 +16,8 @@ const Login = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.token) {
-          localStorage.setItem("token", data.token);
+          setToken(data.token)
+          navigate("/")
         }
         console.log(data);
       })

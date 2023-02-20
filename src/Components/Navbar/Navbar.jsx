@@ -2,11 +2,13 @@ import { Button, Modal } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { ExclamationCircleFilled } from "@ant-design/icons";
 import "./Navbar.css";
+import { useContext } from "react";
+import { AuthContext } from "../../Context/authContext";
 const { confirm } = Modal;
-const token = localStorage.getItem("token");
 
 function Navbar() {
   const navigate = useNavigate();
+  const {token, setToken} = useContext(AuthContext)
   const showExitConfirm = () => {
     confirm({
       title: "Are you sure to exit?",
@@ -15,8 +17,8 @@ function Navbar() {
       okType: "danger",
       cancelText: "No",
       onOk() {
-        localStorage.removeItem("token");
-        navigate("/");
+        setToken(null)
+        navigate("/login");
       },
       onCancel() {
         console.log("Cencelled");
@@ -29,7 +31,7 @@ function Navbar() {
       <div>
         {token ? (
           <div>
-            <div className={`navbarLinks ${ token? "admin" : "" } `}>
+            <div className={`navbarLinks ${token ? "admin" : ""} `}>
               <Link to="/" className="link linkHome">
                 {/* Home */}
               </Link>
@@ -49,14 +51,14 @@ function Navbar() {
             ) : null}
           </div>
         ) : (
-            <div className="navbarLinksUser">
-              <Link to="/" className="link linkHome">
-                {/* Home */}
-              </Link>
-              <Link to="/" className="link linkProducts">
-                {/* Products */}
-              </Link>
-            </div>
+          <div className="navbarLinksUser">
+            <Link to="/" className="link linkHome">
+              {/* Home */}
+            </Link>
+            <Link to="/" className="link linkProducts">
+              {/* Products */}
+            </Link>
+          </div>
         )}
 
         <span className="navLine"></span>
