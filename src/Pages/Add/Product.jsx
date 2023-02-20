@@ -32,7 +32,7 @@ function AddProduct() {
       });
     };
 
-    fetch("http://localhost:3001/products", {
+    fetch(process.env.REACT_APP_BECKEND + "/products", {
       method: "POST",
       body: JSON.stringify(data),
     })

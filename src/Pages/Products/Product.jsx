@@ -10,10 +10,10 @@ import { MyContext } from "../../App";
 function Products() {
   const { edited, setEdited, } = useContext(MyContext)
   const [data, setData] = useState([]);
-  
+  console.log(data);
 
   useEffect(() => {
-    fetch("http://localhost:3001/products")
+    fetch(process.env.REACT_APP_BECKEND + "/products")
       .then((res) => res.json())
       .then((data) => {
         setData(data.msg);

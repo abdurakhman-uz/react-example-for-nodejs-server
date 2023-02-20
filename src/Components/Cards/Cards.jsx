@@ -30,7 +30,7 @@ const BasicCard = (item) => {
       okType: "danger",
       cancelText: "No",
       onOk() {
-        fetch(`http://localhost:3001/product/${dataId}`, {
+        fetch(process.env.REACT_APP_BECKEND + `/product/${dataId}`, {
           method: "DELETE",
         })
           .then((res) => res.json())
@@ -53,7 +53,7 @@ const BasicCard = (item) => {
   };
 
   const Finish = (values) => {
-    fetch(`http://localhost:3001/product/${show[1]}`, {
+    fetch(process.env.REACT_APP_BECKEND + `/product/${show[1]}`, {
       method: "PUT",
       body: JSON.stringify(values),
     })

@@ -21,7 +21,7 @@ function AddUser() {
       });
     };
 
-    fetch("http://localhost:3001/auth/register", {
+    fetch(process.env.REACT_APP_BECKEND + "/auth/register", {
       method: "POST",
       body: JSON.stringify(values),
     })

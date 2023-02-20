@@ -9,7 +9,7 @@ const Login = () => {
   const navigate = useNavigate()
   const {token, setToken} = useContext(AuthContext)
   const Finish = (values) => {
-    fetch("http://localhost:3001/auth/login", {
+    fetch(process.env.REACT_APP_BECKEND + "/auth/login", {
       method: "POST",
       body: JSON.stringify(values),
     })
