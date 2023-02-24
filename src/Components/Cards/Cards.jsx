@@ -1,24 +1,23 @@
 import {
   EditOutlined,
-  EllipsisOutlined,
-  SettingOutlined,
   ExclamationCircleFilled,
   DeleteOutlined,
   ShareAltOutlined,
 } from "@ant-design/icons";
-import { Avatar, Button, Card, Form, Input, Modal } from "antd";
+import { Button, Card, Form, Input, Modal } from "antd";
 import { useContext } from "react";
 import { MyContext } from "../../App";
-import {Message, ModalForm} from "../index";
-
+import { Message, ModalForm } from "../";
+import { AuthContext } from "../../Context/authContext";
 
 const { Meta } = Card;
 const { confirm } = Modal;
 
-const token = localStorage.getItem("token");
-
 const BasicCard = (item) => {
-  const { edited, setEdited, show, setShow } = useContext(MyContext);
+  const { setEdited, show, setShow } = useContext(MyContext);
+  const { token } = useContext(AuthContext)
+
+
   const showDeleteConfirm = (e) => {
     const dataId = e.target.dataset.id;
     console.log(e.target.dataset.id);
@@ -32,6 +31,9 @@ const BasicCard = (item) => {
       onOk() {
         fetch(process.env.REACT_APP_BECKEND + `/product/${dataId}`, {
           method: "DELETE",
+          headers: {
+            token: token
+          }
         })
           .then((res) => res.json())
           .then((data) => {
@@ -55,6 +57,10 @@ const BasicCard = (item) => {
   const Finish = (values) => {
     fetch(process.env.REACT_APP_BECKEND + `/product/${show[1]}`, {
       method: "PUT",
+      headers: {
+        token: token,
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify(values),
     })
       .then((res) => res.json())
@@ -62,6 +68,7 @@ const BasicCard = (item) => {
         console.log(data);
         setEdited(true);
         Message("success", data.msg);
+        setShow(false)
       })
       .catch((err) => {
         console.log(err);
@@ -80,7 +87,7 @@ const BasicCard = (item) => {
         style={{
           width: 300,
         }}
-        cover={<img alt="product-image" src={item.img} />}
+        cover={<img alt="productImage" src={item.img}  height="200"/>}
         actions={[
           token ? (
             <EditOutlined key="edit" onClick={() => setShow([true, item.id])} />
@@ -99,7 +106,10 @@ const BasicCard = (item) => {
           ),
         ]}
       >
-        <Meta title={item.name} description={item.desc} price={item.price} />
+        <Meta title={item.name} description={item.author} price={item.price} />
+        <hr />
+        {/* <br /> */}
+        <Meta description={item.price} />
       </Card>
 
       <ModalForm
@@ -165,7 +175,7 @@ const BasicCard = (item) => {
               span: 16,
             }}
           >
-            <Button className="modalButton" type="primary" htmlType="submit">
+            <Button className="modalButton" type="primary" htmlType="submit" >
               Submit
             </Button>
           </Form.Item>

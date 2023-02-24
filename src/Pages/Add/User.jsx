@@ -1,37 +1,32 @@
-import { Button, Input, Form, message, Select } from "antd";
+import { Button, Input, Form, Select } from "antd";
 import {motion} from "framer-motion"
+import { Message } from "../../Components"
 import "../../global.css"
 
 const { Option } = Select;
+const token = localStorage.getItem("token")
 
 function AddUser() {
-  const [messageApi, contextHolder] = message.useMessage();
   const Finish = (values) => {
-    const success = (messages) => {
-      messageApi.open({
-        type: "success",
-        content: messages,
-      });
-    };
 
-    const error = (messages) => {
-      messageApi.open({
-        type: "error",
-        content: messages,
-      });
-    };
-
-    fetch(process.env.REACT_APP_BECKEND + "/auth/register", {
+    fetch(process.env.REACT_APP_BECKEND + "/register", {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        token: token
+      },
       body: JSON.stringify(values),
     })
       .then((res) => res.json())
       .then((data) => {
-        success(data.msg);
-        console.log(data);
+        if(data.code === 1){
+          return  Message("error", data.msg);
+        } else {
+          return  Message("success", data.msg);
+        }
       })
       .catch((err) => {
-        error(err.msg);
+        Message("error", err.msg);
         console.log(err);
       });
   };
@@ -41,7 +36,8 @@ function AddUser() {
 
   const animation = {
     hidden: {
-      x: 50,
+      x: 0,
+      y: 50,
       opacity: 0
     },
     visible: {
@@ -53,7 +49,6 @@ function AddUser() {
 
   return (
     <>
-      {contextHolder}
 
       <motion.div 
         className="addUser"

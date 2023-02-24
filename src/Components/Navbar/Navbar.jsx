@@ -18,7 +18,7 @@ function Navbar() {
       cancelText: "No",
       onOk() {
         setToken(null)
-        navigate("/login");
+        navigate("/");
       },
       onCancel() {
         console.log("Cencelled");
@@ -35,7 +35,7 @@ function Navbar() {
               <Link to="/" className="link linkHome">
                 {/* Home */}
               </Link>
-              <Link to="/" className="link linkProducts">
+              <Link to="/my_products" className="link linkProducts">
                 {/* Products */}
               </Link>
               {token ? (
@@ -55,7 +55,7 @@ function Navbar() {
             <Link to="/" className="link linkHome">
               {/* Home */}
             </Link>
-            <Link to="/" className="link linkProducts">
+            <Link to="/auth" className="link linkLogin">
               {/* Products */}
             </Link>
           </div>

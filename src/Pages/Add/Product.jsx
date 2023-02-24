@@ -1,48 +1,39 @@
-import { Button, Input, Form, message } from "antd";
-import {motion} from 'framer-motion'
+import { Button, Input, Form } from "antd";
+import { motion } from "framer-motion";
 import "../../global.css";
 import { useState } from "react";
+import { Message } from "../../Components";
+
+const token = localStorage.getItem("token")
 
 function AddProduct() {
-  const [messageApi, contextHolder] = message.useMessage();
-  const [img, setImg] = useState('')
+  const [img, setImg] = useState("");
 
   const Finish = (values) => {
-
-    const { name, desc, price } = values
+    const { name, author, price } = values;
 
     const data = {
       name,
-      desc,
+      author,
       price,
-      img
-    }
-
-    const success = (messages) => {
-      messageApi.open({
-        type: "success",
-        content: messages,
-      });
-    };
-
-    const error = (messages) => {
-      messageApi.open({
-        type: "error",
-        content: messages,
-      });
+      img,
     };
 
     fetch(process.env.REACT_APP_BECKEND + "/products", {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        token: token
+      },
       body: JSON.stringify(data),
     })
       .then((res) => res.json())
       .then((data) => {
-        success(data.msg);
+        Message("success", data.msg);
         console.log(data);
       })
       .catch((err) => {
-        error(err.msg);
+        Message("error", err.msg);
         console.log(err);
       });
   };
@@ -52,40 +43,39 @@ function AddProduct() {
 
   const animation = {
     hidden: {
-      x: -50,
-      opacity: 0
+      x: 0,
+      y: 50,
+      opacity: 0,
     },
     visible: {
       x: 0,
       y: 1,
-      opacity: 1
-    }
-  }
+      opacity: 1,
+    },
+  };
 
   const uploadFile = async (e) => {
-    const files = e.target.files;
-    // console.log(e.target.files);
+    const files = e.target.files[0];
     const data = new FormData();
     data.append("file", files);
-    data.append("upload", "assets");
+    data.append("upload_preset", "upload");
 
-    const res = await fetch(
+    let res = await fetch(
       "https://api.cloudinary.com/v1_1/abduazimov/image/upload",
       {
         method: "POST",
-        body: data
+        body: data,
       }
-    )
-    const data2 = await res.json()
-    // setImg(data2.secure_url);
-    console.log(data2);
-  }
+    );
+    const data2 = await res.json();
+    setImg(data2.secure_url);
+    console.log(await data2);
+  };
 
   return (
     <>
-      {contextHolder}
 
-      <motion.div 
+      <motion.div
         className="addProduct"
         initial="hidden"
         whileInView="visible"
@@ -121,8 +111,8 @@ function AddProduct() {
           </Form.Item>
 
           <Form.Item
-            label="Description"
-            name="desc"
+            label="Author"
+            name="author"
             rules={[
               {
                 required: true,

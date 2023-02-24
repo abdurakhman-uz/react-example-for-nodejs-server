@@ -1,11 +1,16 @@
 import {createContext, useEffect, useState} from "react";
 import {Navigate, Route, Routes} from "react-router-dom";
 import {Navbar} from "./Components";
-import Login from "./Pages/Login/Login";
-import Products from "./Pages/Products/Product";
-import Add from "./Pages/Add/Add";
-import AddProduct from "./Pages/Add/Product"
-import AddUser from "./Pages/Add/User";
+import {
+    Products,
+    AllUser,
+    Login,
+    Register,
+    Add,
+    AddProduct,
+    AddUser,
+    AllProducts
+} from "./Pages"
 const tokens = localStorage.getItem("token")
 
 export const MyContext = createContext()
@@ -16,59 +21,74 @@ function App() {
     const [edited, setEdited] = useState(false);
     const [show, setShow] = useState(false);
 
-    useEffect(() => {
-        if (token) {
-            fetch("http://localhost:3001/auth/check", {
-                method: 'POST',
-                headers: {},
-                body: JSON.stringify(
-                    {token: token}
-                )
-            }).then(res => res.json()).then(data => {
-                if (!data.msg) {
-                    localStorage.removeItem("token")
-                    console.log("error");
-                }
-                console.log(data);
-            }).catch(err => {
-                console.log(err);
-            })
-        }
-    }, [token])
+    // useEffect(() => {
+    //     if (token) {
+    //         fetch(process.env.REACT_APP_BECKEND + "/auth/check", {
+    //             method: 'POST',
+    //             headers: {
+    //                 token: token
+    //             }
+    //         }).then(res => res.json()).then(data => {
+    //             if (!data.msg) {
+    //                 localStorage.removeItem("token")
+    //                 console.log("error");
+    //             }
+    //             console.log(data);
+    //         }).catch(err => {
+    //             console.log(err);
+    //         })
+    //     }
+    // }, [token])
 
     return (
 
         <>
             <MyContext.Provider value={
-                {edited, setEdited, show, setShow, token, setToken}
+                {
+                    edited,
+                    setEdited,
+                    show,
+                    setShow,
+                    token,
+                    setToken
+                }
             }>
                 <Navbar/>
 
                 <Routes>
 
                     <Route path='/'
-                        element={<Products/>}></Route>
-                    <Route path='/products'
-                        element={<Products/>}></Route>
+                        element={<AllProducts/>}></Route>
+                    <Route path="/auth"
+                        element={<AllUser/>}>
+                            <Route index element={<Login/>}/>
+                            <Route path="/auth/login" element={<Login/>}/>
+                            <Route path="/auth/register" element={<Register/>}/>
+                        </Route>
 
                     {
-                    ! token ? <Route path='/login'
-                        element={<Login/>}></Route> : <Route>
-                        <Route path='/login'
-                            element={
-                                <Navigate
-                            to='/'
-                            replace/>
-                            }/>
-                        <Route path='/add'
-                            element={<Add/>}>
-                            <Route path="/add/addUser"
+                    !token ? <Route path='/auth'
+                        element={<AllUser/>}></Route> : 
+                        <Route>
+
+                            <Route path='/auth'
+                                element={
+                                    <Navigate
+                                    to='/'
+                                    replace/>
+                                }/>
+                                
+                            <Route path="/my_products" element={<Products/>}></Route>
+
+                            <Route path='/add'
+                                element={<Add/>}>
+                                <Route path="/add/addUser"
                                 element={<AddUser/>}/>
-                            <Route path="/add/addProduct"
+                                <Route path="/add/addProduct"
                                 element={<AddProduct/>}/>
-                            <Route index
+                                <Route index
                                 element={<AddProduct/>}/>
-                        </Route>
+                            </Route>
                     </Route>
                 } </Routes>
             </MyContext.Provider>
