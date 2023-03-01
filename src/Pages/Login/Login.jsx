@@ -2,16 +2,18 @@ import { Button, Form, Input } from "antd";
 import {motion} from "framer-motion"
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { Message } from "../../Components";
 import { AuthContext } from "../../Context/authContext";
 import "../../global.css";
 
+const { REACT_APP_BECKEND } = process.env
 
 const Login = () => {
   const navigate = useNavigate()
   const {setToken} = useContext(AuthContext)
   const Finish = (values) => {
     console.log(values);
-    fetch(process.env.REACT_APP_BECKEND + "/login", {
+    fetch(REACT_APP_BECKEND + "/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -22,8 +24,11 @@ const Login = () => {
       .then((data) => {
         if (data.token) {
           setToken(data.token)
+          Message("success", data.msg)
           navigate("/")
+          return
         }
+        Message("error", data.msg)
         console.log(data);
       })
       .catch((err) => {

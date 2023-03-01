@@ -10,10 +10,10 @@ function Add() {
         <Link className="nestedLink productAdd" to="/add/addProduct">
           Add Product
         </Link>
-        <span>|</span>
+        {/* <span>|</span>
         <Link className="nestedLink userAdd" to="/add/addUser">
           Add User
-        </Link>
+        </Link> */}
       </div>
       <Outlet/>
     </>

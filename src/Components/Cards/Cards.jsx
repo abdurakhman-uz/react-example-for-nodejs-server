@@ -10,6 +10,8 @@ import { MyContext } from "../../App";
 import { Message, ModalForm } from "../";
 import { AuthContext } from "../../Context/authContext";
 
+
+const { REACT_APP_BECKEND } = process.env
 const { Meta } = Card;
 const { confirm } = Modal;
 
@@ -55,7 +57,7 @@ const BasicCard = (item) => {
   };
 
   const Finish = (values) => {
-    fetch(process.env.REACT_APP_BECKEND + `/product/${show[1]}`, {
+    fetch(REACT_APP_BECKEND + `/products/${show[1]}`, {
       method: "PUT",
       headers: {
         token: token,
@@ -87,7 +89,7 @@ const BasicCard = (item) => {
         style={{
           width: 300,
         }}
-        cover={<img alt="productImage" src={item.img}  height="200"/>}
+        cover={<img alt="productImage" src={REACT_APP_BECKEND + item.img}  height="200"/>}
         actions={[
           token ? (
             <EditOutlined key="edit" onClick={() => setShow([true, item.id])} />

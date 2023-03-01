@@ -1,34 +1,33 @@
-import * as React from 'react';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
+import { ShareAltOutlined } from "@ant-design/icons";
+import { Card } from "antd";
+import { Message } from "../";
 
-export default function ImgMediaCard(item) {
+const { REACT_APP_BECKEND } = process.env;
+const { Meta } = Card;
+
+const DefaultCard = (item) => {
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
-      <CardMedia
-        component="img"
-        alt="product-image"
-        height="140"
-        image={item.img}
-      />
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          {item.name}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {item.desc}
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button size="small">Share</Button>
-        <Button size="small">Learn More</Button>
-      </CardActions>
-      
-    </Card>
+    <>
+      <Card
+        style={{
+          width: 300,
+        }}
+        cover={
+          <img
+            alt="productImage"
+            src={REACT_APP_BECKEND + item.img}
+            height="200"
+          />
+        }
+        actions={[<ShareAltOutlined key="share" />]}
+      >
+        <Meta title={item.name} description={item.author} price={item.price} />
+        <hr />
+        {/* <br /> */}
+        <Meta description={item.price} />
+      </Card>
+    </>
   );
-}
+};
+export default DefaultCard;

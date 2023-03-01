@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import "../../global.css";
 
 import { fadeIn, staggerContainer } from "../../Components/Motion/Motion";
-import { BasicCard } from "../../Components";
+import { BasicCard, DefaultCard } from "../../Components";
 import { MyContext } from "../../App";
 
 const { REACT_APP_BECKEND } = process.env;
@@ -13,7 +13,7 @@ function AllProducts() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch(REACT_APP_BECKEND + "/products", {
+    fetch(REACT_APP_BECKEND + "/all_products", {
       method: "GET",
     })
       .then((res) => res.json())
@@ -51,7 +51,7 @@ function AllProducts() {
                 variants={fadeIn("up", "tween", 0.2, 0.4)}
                 className="cards"
               >
-                {BasicCard(item)}
+                {DefaultCard(item)}
               </motion.div>
             </motion.div>
           ))

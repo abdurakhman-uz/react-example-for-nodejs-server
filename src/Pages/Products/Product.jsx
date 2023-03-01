@@ -25,7 +25,7 @@ function Products() {
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
-          setData({data: data.data, bool: data.msg} );
+          setData(data);
           setEdited(false);
         })
         .catch((err) => {
@@ -55,10 +55,10 @@ function Products() {
   return (
     <>
       <div className="products">
-        {data.bool ? (
-          data.data.length > 0 ? 
+        {
+          data.length > 0 ? 
           (
-            data.data.map((item) => (
+            data.map((item) => (
               <motion.div
                 animate={{
                   x: 0,
@@ -81,7 +81,6 @@ function Products() {
                 </motion.div>
               </motion.div>
           ))
-          ) : <div>You don't have any products</div>
         ) : (
           data ? (
             data.map((item) => (

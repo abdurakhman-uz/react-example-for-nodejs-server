@@ -5,7 +5,6 @@ import Register from "./Login/Register"
 import Add from "./Add/Add"
 import AddProduct from "./Add/Product"
 import AddUser from "./Add/User"
-import ExtraReg from "./Extra/ExtraReg"
 import AllProducts from "./Products/AllProducts"
 
-export { Products, AllProducts, AllUser, Login, Register, Add, AddProduct, AddUser, ExtraReg }
+export { Products, AllProducts, AllUser, Login, Register, Add, AddProduct, AddUser }

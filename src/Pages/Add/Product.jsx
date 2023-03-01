@@ -4,7 +4,8 @@ import "../../global.css";
 import { useState } from "react";
 import { Message } from "../../Components";
 
-const token = localStorage.getItem("token")
+const { REACT_APP_BECKEND } = process.env;
+const token = localStorage.getItem("token");
 
 function AddProduct() {
   const [img, setImg] = useState("");
@@ -19,11 +20,11 @@ function AddProduct() {
       img,
     };
 
-    fetch(process.env.REACT_APP_BECKEND + "/products", {
+    fetch(REACT_APP_BECKEND + "/products", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        token: token
+        token: token,
       },
       body: JSON.stringify(data),
     })
@@ -56,25 +57,23 @@ function AddProduct() {
 
   const uploadFile = async (e) => {
     const files = e.target.files[0];
-    const data = new FormData();
-    data.append("file", files);
-    data.append("upload_preset", "upload");
+    if (files) {
+      const data = new FormData();
+      data.append("file", files);
 
-    let res = await fetch(
-      "https://api.cloudinary.com/v1_1/abduazimov/image/upload",
-      {
+      let res = await fetch(REACT_APP_BECKEND + "/upload", {
         method: "POST",
+        headers: { token: token },
         body: data,
-      }
-    );
-    const data2 = await res.json();
-    setImg(data2.secure_url);
-    console.log(await data2);
+      });
+      const data2 = await res.json();
+      setImg(data2.img);
+      console.log(await data2);
+    }
   };
 
   return (
     <>
-
       <motion.div
         className="addProduct"
         initial="hidden"
@@ -137,7 +136,12 @@ function AddProduct() {
           </Form.Item>
 
           <Form.Item>
-            <input type="file" className="upload" name="file" onChange={(e) => uploadFile(e)}/>
+            <input
+              type="file"
+              className="upload"
+              name="file"
+              onChange={(e) => uploadFile(e)}
+            />
           </Form.Item>
 
           <Form.Item
