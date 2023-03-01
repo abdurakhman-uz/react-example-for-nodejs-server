@@ -31,7 +31,7 @@ const BasicCard = (item) => {
       okType: "danger",
       cancelText: "No",
       onOk() {
-        fetch(process.env.REACT_APP_BECKEND + `/product/${dataId}`, {
+        fetch(process.env.REACT_APP_BECKEND + `/products/${dataId}`, {
           method: "DELETE",
           headers: {
             token: token
